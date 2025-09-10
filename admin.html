@@ -1,0 +1,14 @@
+
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin - Tập Hoá 2k</title><link rel="stylesheet" href="styles.css"></head><body>
+<header class="header"><div class="brand"><div class="logo"><img src="assets/logo.svg" alt="T2K" style="width:36px;height:36px;border-radius:50%"></div><div class="site-title">Tập Hoá 2k — Admin</div></div><div class="nav"><div id="statusArea" class="small">Đang tải...</div><button id="btnLogout" class="btn ghost hidden">Đăng xuất</button></div></header>
+<main class="container"><section class="card"><h3>Đơn hàng</h3><div id="ordersList"></div><div class="row"><button id="clearAll" class="btn">Xoá tất cả</button></div></section></main><footer class="footer">© Tập Hoá 2k</footer>
+<script src="common.js"></script><script>
+function renderOrders(){
+  const arr = JSON.parse(localStorage.getItem('orders')||'[]');
+  const wrap = document.getElementById('ordersList'); wrap.innerHTML=''; if(arr.length===0){ wrap.innerHTML='<p class="small">Chưa có đơn hàng</p>'; return; }
+  arr.forEach(o=>{ const el=document.createElement('div'); el.className='card'; el.innerHTML = `<div><strong>${o.id}</strong> — ${o.name} — ${o.phone} — <span class="small">${o.created}</span></div><div class="small">Items: ${o.items.map(i=>i.title+' x'+i.qty).join(', ')}</div><div class="row"><button class="btn" data-id="${o.id}" data-action="del">Xoá</button></div>`; wrap.appendChild(el); });
+}
+document.addEventListener('DOMContentLoaded', ()=>{ const u = currentUser(); if(!u || !(u.username==='admin')){ alert('Chỉ admin'); window.location.href='login.html'; return; } updateAuthUI(); renderOrders(); const btnLogout=document.getElementById('btnLogout'); if(btnLogout) btnLogout.addEventListener('click', logout); });
+document.getElementById('ordersList').addEventListener('click',(e)=>{ const btn=e.target.closest('button'); if(!btn) return; const id=btn.dataset.id; const action=btn.dataset.action; if(action==='del'){ let arr = JSON.parse(localStorage.getItem('orders')||'[]'); arr = arr.filter(x=>x.id!==id); localStorage.setItem('orders', JSON.stringify(arr)); renderOrders(); } });
+document.getElementById('clearAll').addEventListener('click', ()=>{ if(confirm('Xoá tất cả đơn?')){ localStorage.removeItem('orders'); renderOrders(); } });
+</script></body></html>

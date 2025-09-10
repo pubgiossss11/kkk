@@ -1,0 +1,36 @@
+
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hồ sơ - Tập Hoá 2k</title><link rel="stylesheet" href="styles.css"></head><body>
+<header class="header"><div class="brand"><div class="logo"><img src="assets/logo.svg" alt="T2K" style="width:36px;height:36px;border-radius:50%"></div><div class="site-title">Tập Hoá 2k</div></div><div class="nav"><div id="statusArea" class="small">Đang tải...</div></div></header>
+<main class="container"><section class="card"><h3>Hồ sơ của bạn</h3>
+<form id="profileForm">
+<div class="form-row"><input id="display" class="input" placeholder="Tên hiển thị"></div>
+<div class="form-row"><input id="email" class="input" placeholder="Email"></div>
+<div class="form-row"><input id="avatar" class="input" placeholder="Link avatar (tùy chọn)"></div>
+<div class="form-row"><input id="oldpass" class="input" type="password" placeholder="Mật khẩu cũ (đổi mật khẩu)"></div>
+<div class="form-row"><input id="newpass" class="input" type="password" placeholder="Mật khẩu mới"></div>
+<div class="row"><button class="btn primary" type="submit">Lưu</button></div><div id="profileMsg" class="small"></div>
+</form></section></main><footer class="footer">© Tập Hoá 2k</footer><script src="common.js"></script><script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  const u = currentUser(); if(!u){ window.location.href='login.html'; return; }
+  document.getElementById('display').value = u.display || u.username;
+  document.getElementById('email').value = u.email || '';
+});
+document.getElementById('profileForm').addEventListener('submit',(e)=>{ e.preventDefault();
+  const u = currentUser(); if(!u) return;
+  const users = JSON.parse(localStorage.getItem('users')||'[]');
+  const idx = users.findIndex(x=>x.username===u.username);
+  if(idx>=0){
+    users[idx].displayname = document.getElementById('display').value.trim();
+    users[idx].email = document.getElementById('email').value.trim();
+    const oldp = document.getElementById('oldpass').value;
+    const newp = document.getElementById('newpass').value;
+    if(oldp || newp){
+      if(users[idx].password !== oldp){ document.getElementById('profileMsg').textContent='Mật khẩu cũ không đúng'; return; }
+      users[idx].password = newp;
+    }
+    localStorage.setItem('users', JSON.stringify(users));
+    setCurrentUser({username:users[idx].username, display:users[idx].displayname, isAdmin:users[idx].isAdmin});
+    document.getElementById('profileMsg').textContent='Đã lưu';
+  }
+});
+</script></body></html>

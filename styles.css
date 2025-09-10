@@ -1,0 +1,41 @@
+
+:root{
+  --bg:#0b1020; --card:#0f1724; --muted:#9aa4b2; --accent:#7c5cff; --accent-2:#00d1a1; --text:#e6eef8;
+  --light-bg:#f5f7fb; --light-card:#ffffff; --light-text:#0b1020; --light-muted:#6b7280;
+}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(6px)}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;font-size:18px}
+.site-title{font-weight:700;font-size:18px}
+.nav{display:flex;gap:8px;align-items:center}
+.btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:var(--text);cursor:pointer}
+.btn.primary{background:linear-gradient(180deg,var(--accent),#5b3af0);border:none;color:white}
+.container{width:min(980px,94vw);margin:18px auto;padding-bottom:80px}
+.card{background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.product .thumb{height:110px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:32px;background:linear-gradient(90deg,#132a6a,#2e1b6b);color:white}
+.form-row{display:flex;flex-direction:column;gap:8px;margin:8px 0}
+.input{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);}
+.small{font-size:13px;color:var(--muted)}
+
+/* footer */
+.footer{padding:18px;text-align:center;color:var(--muted);font-size:13px}
+
+/* floating actions */
+.fab{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:8px;z-index:40}
+.fab .count{background:#ff5d5d;color:white;border-radius:50%;width:22px;height:22px;display:grid;place-items:center;font-weight:700;font-size:12px}
+
+/* admin table */
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left}
+
+/* responsive */
+@media (max-width:600px){
+  .nav .hide-mobile{display:none}
+}
+
+/* light theme */
+body.light{
+  --bg:var(--light-bg); --card:var(--light-card); --muted:var(--light-muted); --text:var(--light-text);
+}

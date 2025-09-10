@@ -1,0 +1,19 @@
+
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đặt hàng - Tập Hoá 2k</title><link rel="stylesheet" href="styles.css"></head><body>
+<header class="header"><div class="brand"><div class="logo"><img src="assets/logo.svg" alt="T2K" style="width:36px;height:36px;border-radius:50%"></div><div class="site-title">Tập Hoá 2k</div></div><div class="nav"><div id="statusArea" class="small">Đang tải...</div><button id="btnLogout" class="btn ghost hidden">Đăng xuất</button></div></header>
+<main class="container"><section class="card"><h3>Giỏ hàng</h3><div id="cartContents"></div></section>
+<section class="card"><h3>Thông tin đặt hàng</h3>
+<form id="orderForm">
+<div class="form-row"><input id="name" class="input" placeholder="Họ & tên" required></div>
+<div class="form-row"><input id="phone" class="input" placeholder="Số điện thoại / Zalo" required></div>
+<div class="form-row"><input id="email" class="input" placeholder="Email (nhận acc)"></div>
+<div class="form-row"><textarea id="note" class="input" placeholder="Ghi chú (ví dụ: giao qua Zalo giờ nào?)" rows="3"></textarea></div>
+<div class="row"><button class="btn primary" type="submit">Xác nhận đặt hàng</button></div>
+<div id="orderMsg" class="small" style="margin-top:8px"></div>
+</form></section></main><footer class="footer">© Tập Hoá 2k</footer>
+<script src="common.js"></script><script>
+const CART = JSON.parse(localStorage.getItem('cart')||'[]');
+function renderCart(){ const c = document.getElementById('cartContents'); if(CART.length===0){ c.innerHTML='<p class="small">Giỏ trống</p>'; return; } c.innerHTML=''; CART.forEach(it=>{ const div=document.createElement('div'); div.className='card'; div.innerHTML=`<div><strong>${it.title}</strong> x${it.qty} — ${fmt(it.price)}</div>`; c.appendChild(div); }); }
+document.getElementById('orderForm').addEventListener('submit',(e)=>{ e.preventDefault(); const user = currentUser(); if(!user){ window.location.href='login.html'; return; } const order = { id:'ORD-'+Date.now(), user:user.username, name:document.getElementById('name').value, phone:document.getElementById('phone').value, email:document.getElementById('email').value, items:CART, total:CART.reduce((s,i)=>s+i.qty*i.price,0), note:document.getElementById('note').value, created: new Date().toLocaleString() }; saveOrder(order); sendTelegram(order); document.getElementById('orderMsg').textContent='Đã gửi đơn. Chúng tôi sẽ liên hệ bạn sớm.'; localStorage.removeItem('cart'); setTimeout(()=>window.location.href='index.html',1500); });
+document.addEventListener('DOMContentLoaded', ()=>{ renderCart(); updateAuthUI(); const btnLogout=document.getElementById('btnLogout'); if(btnLogout) btnLogout.addEventListener('click', logout); });
+</script></body></html>

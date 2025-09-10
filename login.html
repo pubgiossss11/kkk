@@ -1,0 +1,22 @@
+
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đăng nhập - Tập Hoá 2k</title><link rel="stylesheet" href="styles.css"></head><body>
+<header class="header"><div class="brand"><div class="logo"><img src="assets/logo.svg" alt="T2K" style="width:36px;height:36px;border-radius:50%"></div><div class="site-title">Tập Hoá 2k</div></div><div class="nav"><div id="statusArea" class="small">Đang tải...</div></div></header>
+<main class="container"><section class="card"><h3>Đăng nhập</h3>
+<form id="loginForm" class="form">
+<div class="form-row"><input id="username" class="input" placeholder="Tên đăng nhập" required></div>
+<div class="form-row"><input id="password" type="password" class="input" placeholder="Mật khẩu" required></div>
+<div class="row"><button class="btn primary" type="submit">Đăng nhập</button><button id="toRegister" type="button" class="btn">Đăng ký</button></div>
+<div id="loginError" class="small" style="color:#ff8b8b;margin-top:8px"></div>
+</form>
+</section></main><footer class="footer">© Tập Hoá 2k</footer><script src="common.js"></script><script>
+document.getElementById('toRegister').addEventListener('click', ()=>{ window.location.href='register.html'; });
+document.getElementById('loginForm').addEventListener('submit', (e)=>{ e.preventDefault();
+  const u = document.getElementById('username').value.trim();
+  const p = document.getElementById('password').value;
+  // allow admin seeded account
+  if(u==='admin' && p==='Baoig66@:3'){ setCurrentUser({username:'admin', display:'Admin', isAdmin:true}); window.location.href='index.html'; return; }
+  const found = findUser(u);
+  if(!found || found.password !== p){ document.getElementById('loginError').textContent = 'Sai tài khoản hoặc mật khẩu'; return; }
+  setCurrentUser({username:found.username, display:found.displayname||found.username, isAdmin:false}); window.location.href='index.html';
+});
+</script></body></html>
