@@ -1,20 +1,107 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Đăng ký - Tập Hoá 2k</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="header">
+  <div class="brand">
+    <div class="logo">
+      <img src="assets/logo.svg" alt="T2K" style="width:36px;height:36px;border-radius:50%">
+    </div>
+    <div class="site-title">Tập Hoá 2k</div>
+  </div>
+</header>
 
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đăng ký - Tập Hoá 2k</title><link rel="stylesheet" href="styles.css"></head><body>
-<header class="header"><div class="brand"><div class="logo"><img src="assets/logo.svg" alt="T2K" style="width:36px;height:36px;border-radius:50%"></div><div class="site-title">Tập Hoá 2k</div></div></header>
-<main class="container"><section class="card"><h3>Đăng ký</h3>
-<form id="registerForm">
-<div class="form-row"><input id="regUser" class="input" placeholder="Tên đăng nhập" required></div>
-<div class="form-row"><input id="regDisplay" class="input" placeholder="Tên hiển thị (tùy chọn)"></div>
-<div class="form-row"><input id="regPass" type="password" class="input" placeholder="Mật khẩu" required></div>
-<div class="row"><button class="btn primary" type="submit">Đăng ký</button><button id="toLogin" type="button" class="btn">Đăng nhập</button></div>
-<div id="regError" class="small" style="color:#ff8b8b;margin-top:8px"></div>
-</form></section></main><footer class="footer">© Tập Hoá 2k</footer><script src="common.js"></script><script>
+<main class="container">
+  <section class="card">
+    <h3>Đăng ký</h3>
+    <form id="registerForm">
+      <div class="form-row">
+        <input id="regUser" class="input" placeholder="Tên đăng nhập" required>
+      </div>
+      <div class="form-row">
+        <input id="regDisplay" class="input" placeholder="Tên hiển thị (tùy chọn)">
+      </div>
+      <div class="form-row">
+        <input id="regPass" type="password" class="input" placeholder="Mật khẩu" required>
+      </div>
+      <div class="row">
+        <button class="btn primary" type="submit">Đăng ký</button>
+        <button id="toLogin" type="button" class="btn">Đăng nhập</button>
+      </div>
+      <div id="regError" class="small" style="color:#ff8b8b;margin-top:8px"></div>
+    </form>
+  </section>
+
+  <!-- 🔹 PHẦN NẠP TIỀN -->
+  <section class="card" style="margin-top:16px">
+    <h3>Nạp tiền</h3>
+    <form id="depositForm">
+      <div class="form-row">
+        <input id="depositAmount" type="number" min="1000" class="input" placeholder="Nhập số tiền (VNĐ)" required>
+      </div>
+      <div class="row">
+        <button type="button" class="btn primary" onclick="napTien()">Nạp ngay</button>
+      </div>
+      <div id="depositMessage" class="small" style="color:#7effa0;margin-top:8px"></div>
+    </form>
+  </section>
+</main>
+
+<footer class="footer">© Tập Hoá 2k</footer>
+
+<script src="common.js"></script>
+<script>
 document.getElementById('toLogin').addEventListener('click', ()=>window.location.href='login.html');
-document.getElementById('registerForm').addEventListener('submit', (e)=>{ e.preventDefault();
+
+// Xử lý đăng ký
+document.getElementById('registerForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
   const u = document.getElementById('regUser').value.trim();
   const p = document.getElementById('regPass').value;
   const d = document.getElementById('regDisplay').value.trim();
-  if(findUser(u)){ document.getElementById('regError').textContent = 'Username đã tồn tại'; return; }
-  saveUser({username:u,password:p,displayname:d}); setCurrentUser({username:u,display:d||u,isAdmin:false}); window.location.href='index.html';
+  if(findUser(u)){ 
+    document.getElementById('regError').textContent = 'Username đã tồn tại'; 
+    return; 
+  }
+  saveUser({username:u,password:p,displayname:d, balance:0});
+  setCurrentUser({username:u,display:d||u,isAdmin:false});
+  window.location.href='index.html';
 });
-</script></body></html>
+
+// 🔹 Hàm xử lý nạp tiền
+function napTien() {
+  const soTien = parseInt(document.getElementById('depositAmount').value);
+  const msg = document.getElementById('depositMessage');
+
+  if (!soTien || soTien < 1000) {
+    msg.style.color = '#ff8b8b';
+    msg.textContent = 'Vui lòng nhập số tiền hợp lệ (tối thiểu 1.000đ)';
+    return;
+  }
+
+  // Nếu muốn lưu số tiền tạm vào LocalStorage
+  const current = getCurrentUser();
+  if (current) {
+    const user = findUser(current.username);
+    if (user) {
+      user.balance = (user.balance || 0) + soTien;
+      saveUser(user);
+      msg.style.color = '#7effa0';
+      msg.textContent = '✅ Nạp thành công ' + soTien.toLocaleString('vi-VN') + 'đ!';
+    } else {
+      msg.style.color = '#ff8b8b';
+      msg.textContent = 'Không tìm thấy người dùng hiện tại!';
+    }
+  } else {
+    msg.style.color = '#ff8b8b';
+    msg.textContent = 'Vui lòng đăng nhập trước khi nạp tiền!';
+  }
+}
+</script>
+</body>
+</html>
