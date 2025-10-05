@@ -1,14 +1,45 @@
-
 <!doctype html>
 <html lang="vi">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tập Hoá 2k</title>
-<link rel="stylesheet" href="styles.css"></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tập Hoá 2k</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
 <body>
 <header class="header">
-  <div class="brand"><div class="logo"><img src="assets/logo.svg" alt="T2K" style="width:36px;height:36px;border-radius:50%"></div><div class="site-title">Tập Hoá 2k</div></div>
-  <div class="nav"><div id="statusArea" class="small">Đang tải...</div><button id="btnLogin" class="btn">Đăng nhập</button><button id="btnLogout" class="btn ghost hidden">Đăng xuất</button><button id="themeToggle" class="btn hide-mobile">Đổi giao diện</button></div>
+  <div class="brand">
+    <div class="logo"><img src="assets/logo.svg" alt="T2K" style="width:36px;height:36px;border-radius:50%"></div>
+    <div class="site-title">Tập Hoá 2k</div>
+  </div>
+  <div class="nav">
+    <div id="statusArea" class="small">Đang tải...</div>
+    <button id="btnLogin" class="btn">Đăng nhập</button>
+    <button id="btnLogout" class="btn ghost hidden">Đăng xuất</button>
+    <button id="themeToggle" class="btn hide-mobile">Đổi giao diện</button>
+  </div>
 </header>
+
 <main class="container">
+  <!-- 🔹 Lời chào người dùng -->
+  <section id="welcomeCard" class="card" style="display:none;">
+    <h3>Xin chào, <span id="userName"></span> 👋</h3>
+    <p class="small">Chúc bạn mua sắm vui vẻ tại Tập Hoá 2k!</p>
+  </section>
+
+  <!-- 🔹 Phần nạp tiền (ẩn mặc định) -->
+  <section id="depositSection" class="card" style="margin-top:16px; display:none;">
+    <h3>Nạp tiền</h3>
+    <div class="form-row">
+      <input id="depositAmount" type="number" min="1000" class="input" placeholder="Nhập số tiền (VNĐ)" required>
+    </div>
+    <div class="row">
+      <button type="button" class="btn primary" onclick="napTien()">Nạp ngay</button>
+      <button type="button" class="btn" onclick="xemSoDu()">Xem số dư</button>
+    </div>
+    <div id="depositMessage" class="small" style="color:#7effa0;margin-top:8px"></div>
+  </section>
+
   <section class="card">
     <h2>Chúng tôi cung cấp</h2>
     <p class="small">Shop chuyên acc game, an toàn và nhanh chóng. Chọn sản phẩm và đặt hàng — chúng tôi sẽ liên hệ qua Telegram.</p>
@@ -19,37 +50,132 @@
     <div id="products" class="grid"></div>
   </section>
 </main>
+
 <footer class="footer">© Tập Hoá 2k</footer>
+
 <div class="fab">
   <button id="btnCart" class="btn primary">Giỏ hàng <span id="cartCount" class="count">0</span></button>
 </div>
+
 <script src="common.js"></script>
 <script>
-// sample products
+// ====================== QUẢN LÝ NGƯỜI DÙNG =========================
+window.addEventListener('DOMContentLoaded', ()=>{
+  const current = getCurrentUser?.();
+  const depositSection = document.getElementById('depositSection');
+  const welcomeCard = document.getElementById('welcomeCard');
+  const userName = document.getElementById('userName');
+  const btnLogin = document.getElementById('btnLogin');
+  const btnLogout = document.getElementById('btnLogout');
+  const statusArea = document.getElementById('statusArea');
+
+  if (current && current.username) {
+    // Nếu đã đăng nhập
+    depositSection.style.display = 'block';
+    welcomeCard.style.display = 'block';
+    userName.textContent = current.display || current.username;
+    btnLogin.classList.add('hidden');
+    btnLogout.classList.remove('hidden');
+    statusArea.textContent = 'Đã đăng nhập';
+  } else {
+    // Nếu chưa đăng nhập
+    depositSection.style.display = 'none';
+    welcomeCard.style.display = 'none';
+    btnLogin.classList.remove('hidden');
+    btnLogout.classList.add('hidden');
+    statusArea.textContent = 'Chưa đăng nhập';
+  }
+});
+
+// ====================== CHỨC NĂNG NẠP TIỀN =========================
+function napTien() {
+  const soTien = parseInt(document.getElementById('depositAmount').value);
+  const msg = document.getElementById('depositMessage');
+  if (!soTien || soTien < 1000) {
+    msg.style.color = '#ff8b8b';
+    msg.textContent = 'Vui lòng nhập số tiền hợp lệ (tối thiểu 1.000đ)';
+    return;
+  }
+
+  const current = getCurrentUser?.();
+  if (!current) {
+    msg.style.color = '#ff8b8b';
+    msg.textContent = 'Vui lòng đăng nhập trước khi nạp tiền!';
+    return;
+  }
+
+  const user = findUser(current.username);
+  if (user) {
+    user.balance = (user.balance || 0) + soTien;
+    saveUser(user);
+    msg.style.color = '#7effa0';
+    msg.textContent = '✅ Nạp thành công ' + soTien.toLocaleString('vi-VN') + 'đ!';
+  } else {
+    msg.style.color = '#ff8b8b';
+    msg.textContent = 'Không tìm thấy người dùng!';
+  }
+}
+
+function xemSoDu() {
+  const msg = document.getElementById('depositMessage');
+  const current = getCurrentUser?.();
+  if (!current) {
+    msg.style.color = '#ff8b8b';
+    msg.textContent = 'Bạn chưa đăng nhập!';
+    return;
+  }
+  const user = findUser(current.username);
+  if (user) {
+    msg.style.color = '#7effa0';
+    msg.textContent = '💰 Số dư hiện tại: ' + (user.balance || 0).toLocaleString('vi-VN') + 'đ';
+  }
+}
+
+// ====================== SẢN PHẨM VÀ GIỎ HÀNG =========================
 const PRODUCTS = [
   {id:'p1', title:'Acc Valorant Silver', desc:'Rank Silver, email gốc', price:350000},
   {id:'p2', title:'Acc Liên Quân Bạch Kim', desc:'Nhiều skin', price:890000},
   {id:'p3', title:'Acc Genshin AR45', desc:'Nhân vật hiếm', price:1500000}
 ];
+
 function renderProducts(){
-  const wrap = document.getElementById('products'); wrap.innerHTML='';
+  const wrap = document.getElementById('products'); 
+  wrap.innerHTML='';
   PRODUCTS.forEach(p=>{
     const el = document.createElement('div'); el.className='product card';
-    el.innerHTML = `<div class="thumb">🎮</div><h4>${p.title}</h4><p class="small">${p.desc}</p><div class="row" style="justify-content:space-between"><div class="price">${fmt(p.price)}</div><button class="btn primary" data-id="${p.id}">Thêm</button></div>`;
+    el.innerHTML = `
+      <div class="thumb">🎮</div>
+      <h4>${p.title}</h4>
+      <p class="small">${p.desc}</p>
+      <div class="row" style="justify-content:space-between">
+        <div class="price">${fmt(p.price)}</div>
+        <button class="btn primary" data-id="${p.id}">Thêm</button>
+      </div>`;
     wrap.appendChild(el);
   });
 }
+
 let CART = JSON.parse(localStorage.getItem('cart')||'[]');
 function saveCart(){ localStorage.setItem('cart', JSON.stringify(CART)); updateCartCount(); }
 function updateCartCount(){ document.getElementById('cartCount').textContent = CART.reduce((s,i)=>s+i.qty,0); }
+
 document.addEventListener('click', (e)=>{
   const btn = e.target.closest('[data-id]');
-  if(btn){ const id = btn.dataset.id; const p = PRODUCTS.find(x=>x.id===id); const f = CART.find(x=>x.id===id); if(f) f.qty++; else CART.push({...p, qty:1}); saveCart(); alert('Đã thêm vào giỏ'); }
+  if(btn){
+    const id = btn.dataset.id;
+    const p = PRODUCTS.find(x=>x.id===id);
+    const f = CART.find(x=>x.id===id);
+    if(f) f.qty++; else CART.push({...p, qty:1});
+    saveCart();
+    alert('Đã thêm vào giỏ');
+  }
 });
+
 document.getElementById('btnCart').addEventListener('click', ()=>{ window.location.href='order.html'; });
 document.getElementById('btnLogin').addEventListener('click', ()=>{ window.location.href='login.html'; });
 document.getElementById('btnLogout').addEventListener('click', ()=>{ logout(); });
 document.getElementById('themeToggle').addEventListener('click', ()=>{ toggleTheme(); });
+
 renderProducts(); updateCartCount();
 </script>
 </body>
