@@ -51,6 +51,75 @@ document.getElementById('btnLogin').addEventListener('click', ()=>{ window.locat
 document.getElementById('btnLogout').addEventListener('click', ()=>{ logout(); });
 document.getElementById('themeToggle').addEventListener('click', ()=>{ toggleTheme(); });
 renderProducts(); updateCartCount();
+<!-- 🔹 PHẦN NẠP TIỀN (chỉ hiện khi đăng nhập) -->
+<section id="depositSection" class="card" style="margin-top:16px; display:none;">
+  <h3>Nạp tiền</h3>
+  <div class="form-row">
+    <input id="depositAmount" type="number" min="1000" class="input" placeholder="Nhập số tiền (VNĐ)" required>
+  </div>
+  <div class="row">
+    <button type="button" class="btn primary" onclick="napTien()">Nạp ngay</button>
+    <button type="button" class="btn" onclick="xemSoDu()">Xem số dư</button>
+  </div>
+  <div id="depositMessage" class="small" style="color:#7effa0;margin-top:8px"></div>
+</section>
+
+<script>
+// Khi trang load, kiểm tra đăng nhập
+window.addEventListener('DOMContentLoaded', ()=>{
+  const current = getCurrentUser?.();
+  const depositSection = document.getElementById('depositSection');
+  if (current && current.username) {
+    depositSection.style.display = 'block';
+  } else {
+    depositSection.style.display = 'none';
+  }
+});
+
+// Nạp tiền
+function napTien() {
+  const soTien = parseInt(document.getElementById('depositAmount').value);
+  const msg = document.getElementById('depositMessage');
+  if (!soTien || soTien < 1000) {
+    msg.style.color = '#ff8b8b';
+    msg.textContent = 'Vui lòng nhập số tiền hợp lệ (tối thiểu 1.000đ)';
+    return;
+  }
+
+  const current = getCurrentUser?.();
+  if (!current) {
+    msg.style.color = '#ff8b8b';
+    msg.textContent = 'Vui lòng đăng nhập trước khi nạp tiền!';
+    return;
+  }
+
+  const user = findUser(current.username);
+  if (user) {
+    user.balance = (user.balance || 0) + soTien;
+    saveUser(user);
+    msg.style.color = '#7effa0';
+    msg.textContent = '✅ Nạp thành công ' + soTien.toLocaleString('vi-VN') + 'đ!';
+  } else {
+    msg.style.color = '#ff8b8b';
+    msg.textContent = 'Không tìm thấy người dùng!';
+  }
+}
+
+// Xem số dư hiện tại
+function xemSoDu() {
+  const msg = document.getElementById('depositMessage');
+  const current = getCurrentUser?.();
+  if (!current) {
+    msg.style.color = '#ff8b8b';
+    msg.textContent = 'Bạn chưa đăng nhập!';
+    return;
+  }
+  const user = findUser(current.username);
+  if (user) {
+    msg.style.color = '#7effa0';
+    msg.textContent = '💰 Số dư hiện tại: ' + (user.balance || 0).toLocaleString('vi-VN') + 'đ';
+  }
+}
 </script>
 </body>
 </html>
