@@ -4,269 +4,411 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>T2K Store</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
 <style>
 
 *{
 
-  margin:0;
+    margin:0;
 
-  padding:0;
+    padding:0;
 
-  box-sizing:border-box;
+    box-sizing:border-box;
 
-  font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
 
 }
 
 body{
 
-  background:#0f1115;
+    background:#050816;
 
-  color:white;
+    color:white;
 
-}
-
-.header{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  padding:15px 30px;
-
-  background:#161a22;
-
-  border-bottom:1px solid #2b2f3a;
-
-  position:sticky;
-
-  top:0;
+    overflow-x:hidden;
 
 }
 
-.brand{
+/* HEADER */
 
-  display:flex;
+header{
 
-  align-items:center;
+    width:100%;
 
-  gap:10px;
+    background:#0d111d;
+
+    padding:15px 20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border-bottom:2px solid #1b2235;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+}
+
+.logo-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
 
 }
 
 .logo{
 
-  width:42px;
+    width:45px;
 
-  height:42px;
+    height:45px;
 
-  background:#2e7dff;
+    border-radius:50%;
 
-  border-radius:50%;
+    background:#1f6fff;
 
-  display:flex;
+    display:flex;
 
-  align-items:center;
+    justify-content:center;
 
-  justify-content:center;
+    align-items:center;
 
-  font-weight:bold;
+    font-weight:bold;
 
-}
-
-.site-title{
-
-  font-size:20px;
-
-  font-weight:bold;
+    font-size:18px;
 
 }
 
-.nav{
+.site-name{
 
-  display:flex;
+    font-size:24px;
 
-  align-items:center;
+    font-weight:bold;
 
-  gap:10px;
-
-}
-
-.btn{
-
-  padding:10px 14px;
-
-  border:none;
-
-  border-radius:10px;
-
-  cursor:pointer;
-
-  transition:.2s;
+    letter-spacing:1px;
 
 }
 
-.btn:hover{
+.menu-btn{
 
-  transform:scale(1.05);
+    background:none;
+
+    border:none;
+
+    color:white;
+
+    font-size:32px;
+
+    cursor:pointer;
+
+}
+
+/* HERO */
+
+.hero{
+
+    width:100%;
+
+    height:260px;
+
+    background:url('https://i.imgur.com/G0KXw1x.jpeg') center/cover;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
 
 }
 
-.primary{
+.hero::after{
 
-  background:#2e7dff;
+    content:'';
 
-  color:white;
+    position:absolute;
+
+    inset:0;
+
+    background:rgba(0,0,0,.55);
+
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
 
 }
 
-.ghost{
+.hero h1{
 
-  background:transparent;
+    font-size:50px;
 
-  border:1px solid #555;
+    margin-bottom:10px;
 
-  color:white;
+    text-shadow:0 0 20px #000;
 
 }
+
+.hero p{
+
+    color:#ddd;
+
+    font-size:18px;
+
+}
+
+/* CONTAINER */
 
 .container{
 
-  max-width:1200px;
+    max-width:1200px;
 
-  margin:auto;
+    margin:auto;
 
-  padding:20px;
-
-}
-
-.card{
-
-  background:#171b24;
-
-  border:1px solid #262c38;
-
-  border-radius:18px;
-
-  padding:20px;
-
-  margin-bottom:20px;
+    padding:20px;
 
 }
 
-.grid{
+/* CARD */
 
-  display:grid;
+.shop-card{
 
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    background:#0b1020;
 
-  gap:20px;
+    border:1px solid #1e2944;
 
-}
+    border-radius:15px;
 
-.product{
+    overflow:hidden;
 
-  transition:.2s;
+    margin-bottom:35px;
 
-}
+    box-shadow:0 0 25px rgba(0,0,0,.4);
 
-.product:hover{
-
-  transform:translateY(-5px);
-
-  border-color:#2e7dff;
+    transition:.25s;
 
 }
 
-.thumb{
+.shop-card:hover{
 
-  height:140px;
+    transform:translateY(-5px);
 
-  border-radius:14px;
-
-  background:linear-gradient(135deg,#2e7dff,#6a5cff);
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:50px;
-
-  margin-bottom:15px;
+    border-color:#2979ff;
 
 }
 
-.price{
+.banner{
 
-  color:#00ff9d;
+    width:100%;
 
-  font-weight:bold;
+    height:260px;
 
-  font-size:18px;
-
-}
-
-.small{
-
-  color:#aaa;
-
-  font-size:14px;
+    object-fit:cover;
 
 }
 
-.row{
+.content{
 
-  display:flex;
-
-  align-items:center;
+    padding:20px;
 
 }
 
-.footer{
+.title{
 
-  text-align:center;
+    font-size:38px;
 
-  padding:25px;
+    margin-bottom:15px;
 
-  color:#888;
-
-}
-
-.fab{
-
-  position:fixed;
-
-  bottom:20px;
-
-  right:20px;
+    text-transform:uppercase;
 
 }
 
-.count{
+.desc{
 
-  background:red;
+    color:#aaa;
 
-  border-radius:50%;
+    margin-bottom:20px;
 
-  padding:2px 7px;
-
-  margin-left:5px;
+    line-height:1.6;
 
 }
 
-.hidden{
+/* SELECT */
 
-  display:none;
+.package-select{
+
+    width:100%;
+
+    padding:16px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:8px;
+
+    font-size:22px;
+
+    margin-bottom:15px;
+
+    background:#ececec;
+
+}
+
+/* BUTTON */
+
+.buy-btn{
+
+    width:100%;
+
+    padding:16px;
+
+    background:#ff9800;
+
+    border:none;
+
+    color:white;
+
+    font-size:28px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    margin-bottom:15px;
+
+}
+
+.buy-btn:hover{
+
+    background:#ffb13b;
+
+}
+
+.download-btn{
+
+    width:100%;
+
+    padding:15px;
+
+    background:white;
+
+    color:black;
+
+    border:none;
+
+    border-radius:8px;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+/* FLOATING CART */
+
+.cart{
+
+    position:fixed;
+
+    right:20px;
+
+    bottom:20px;
+
+    background:#2979ff;
+
+    padding:15px 20px;
+
+    border-radius:50px;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    box-shadow:0 0 20px rgba(41,121,255,.5);
+
+}
+
+/* FOOTER */
+
+footer{
+
+    text-align:center;
+
+    padding:30px;
+
+    color:#777;
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero{
+
+    height:180px;
+
+}
+
+.hero h1{
+
+    font-size:34px;
+
+}
+
+.title{
+
+    font-size:28px;
+
+}
+
+.package-select{
+
+    font-size:18px;
+
+}
+
+.buy-btn{
+
+    font-size:22px;
+
+}
+
+.download-btn{
+
+    font-size:18px;
+
+}
+
+.banner{
+
+    height:200px;
+
+}
 
 }
 
@@ -276,255 +418,163 @@ body{
 
 <body>
 
-<header class="header">
+<header>
 
-  <div class="brand">
+    <div class="logo-area">
 
-    <div class="logo">T2K</div>
+        <div class="logo">T2K</div>
 
-    <div class="site-title">T2K Digital Store</div>
+        <div class="site-name">T2K STORE</div>
 
-  </div>
+    </div>
 
-  <div class="nav">
-
-    <div id="statusArea" class="small">Chưa đăng nhập</div>
-
-    <button id="btnLogin" class="btn primary">
-
-      Đăng nhập
-
-    </button>
-
-    <button id="themeToggle" class="btn ghost">
-
-      Đổi giao diện
-
-    </button>
-
-  </div>
+    <button class="menu-btn">☰</button>
 
 </header>
 
-<main class="container">
+<section class="hero">
 
-  <section class="card">
+    <div class="hero-content">
 
-    <h2>Chào mừng đến với T2K</h2>
+        <h1>T2K STORE</h1>
 
-    <br>
+        <p>Digital Gaming Platform</p>
 
-    <p class="small">
+    </div>
 
-      Chuyên cung cấp sản phẩm kỹ thuật số, giao hàng nhanh và hỗ trợ 24/7.
+</section>
 
-    </p>
+<div class="container">
 
-  </section>
+    <!-- CARD 1 -->
 
-  <section class="card">
+    <div class="shop-card">
 
-    <h2>Sản phẩm nổi bật</h2>
+        <img src="https://i.imgur.com/UPrs1EW.jpeg" class="banner">
 
-    <br>
+        <div class="content">
 
-    <div id="products" class="grid"></div>
+            <div class="title">
 
-  </section>
+                GÓI LITE
 
-</main>
+            </div>
 
-<footer class="footer">
+            <div class="desc">
 
-  © 2026 T2K Store
+                Phiên bản cơ bản dành cho người mới.
 
-</footer>
+            </div>
 
-<div class="fab">
+            <select class="package-select">
 
-  <button id="btnCart" class="btn primary">
+                <option>--- Chọn gói ---</option>
 
-    Giỏ hàng
+                <option>40.000đ / 1 Ngày</option>
 
-    <span id="cartCount" class="count">0</span>
+                <option>240.000đ / 7 Ngày</option>
 
-  </button>
+                <option>540.000đ / 30 Ngày</option>
+
+            </select>
+
+            <button class="buy-btn">
+
+                Thuê ngay
+
+            </button>
+
+            <button class="download-btn">
+
+                📹 Hướng dẫn sử dụng
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- CARD 2 -->
+
+    <div class="shop-card">
+
+        <img src="https://i.imgur.com/oYiTqum.jpeg" class="banner">
+
+        <div class="content">
+
+            <div class="title">
+
+                GÓI PREMIUM
+
+            </div>
+
+            <div class="desc">
+
+                Phiên bản nâng cao với nhiều tính năng hơn.
+
+            </div>
+
+            <select class="package-select">
+
+                <option>--- Chọn gói ---</option>
+
+                <option>70.000đ / 1 Ngày</option>
+
+                <option>450.000đ / 7 Ngày</option>
+
+                <option>900.000đ / 30 Ngày</option>
+
+            </select>
+
+            <button class="buy-btn">
+
+                Thuê ngay
+
+            </button>
+
+            <button class="download-btn">
+
+                📹 Hướng dẫn sử dụng
+
+            </button>
+
+        </div>
+
+    </div>
 
 </div>
 
+<div class="cart">
+
+🛒 Giỏ hàng (<span id="cart-count">0</span>)
+
+</div>
+
+<footer>
+
+© 2026 T2K Store
+
+</footer>
+
 <script>
 
-const PRODUCTS = [
+let cart = 0;
 
-{
+const buyButtons = document.querySelectorAll('.buy-btn');
 
-  id:'p1',
+buyButtons.forEach(btn=>{
 
-  title:'Gói Lite',
+    btn.addEventListener('click', ()=>{
 
-  desc:'Phiên bản cơ bản dành cho người mới.',
+        cart++;
 
-  price:40000
+        document.getElementById('cart-count').innerText = cart;
 
-},
+        alert('Đã thêm vào giỏ hàng');
 
-{
-
-  id:'p2',
-
-  title:'Gói Premium',
-
-  desc:'Nhiều tính năng nâng cao hơn.',
-
-  price:240000
-
-},
-
-{
-
-  id:'p3',
-
-  title:'Gói Ultimate',
-
-  desc:'Full tính năng + hỗ trợ VIP.',
-
-  price:540000
-
-}
-
-];
-
-function fmt(price){
-
-  return price.toLocaleString('vi-VN') + '₫';
-
-}
-
-function renderProducts(){
-
-  const wrap = document.getElementById('products');
-
-  wrap.innerHTML='';
-
-  PRODUCTS.forEach(p=>{
-
-    const el = document.createElement('div');
-
-    el.className='product card';
-
-    el.innerHTML = `
-
-      <div class="thumb">🎮</div>
-
-      <h3>${p.title}</h3>
-
-      <br>
-
-      <p class="small">${p.desc}</p>
-
-      <br>
-
-      <div class="row" style="justify-content:space-between">
-
-        <div class="price">${fmt(p.price)}</div>
-
-        <button class="btn primary addBtn" data-id="${p.id}">
-
-          Thêm
-
-        </button>
-
-      </div>
-
-    `;
-
-    wrap.appendChild(el);
-
-  });
-
-}
-
-let CART = JSON.parse(localStorage.getItem('cart') || '[]');
-
-function saveCart(){
-
-  localStorage.setItem('cart', JSON.stringify(CART));
-
-  updateCartCount();
-
-}
-
-function updateCartCount(){
-
-  const total = CART.reduce((s,i)=>s+i.qty,0);
-
-  document.getElementById('cartCount').textContent = total;
-
-}
-
-document.addEventListener('click', (e)=>{
-
-  const btn = e.target.closest('.addBtn');
-
-  if(btn){
-
-    const id = btn.dataset.id;
-
-    const p = PRODUCTS.find(x=>x.id===id);
-
-    const found = CART.find(x=>x.id===id);
-
-    if(found){
-
-      found.qty++;
-
-    }else{
-
-      CART.push({
-
-        ...p,
-
-        qty:1
-
-      });
-
-    }
-
-    saveCart();
-
-    alert('Đã thêm vào giỏ hàng');
-
-  }
+    });
 
 });
-
-document.getElementById('themeToggle').addEventListener('click', ()=>{
-
-  if(document.body.style.background === 'white'){
-
-    document.body.style.background = '#0f1115';
-
-    document.body.style.color = 'white';
-
-  }else{
-
-    document.body.style.background = 'white';
-
-    document.body.style.color = 'black';
-
-  }
-
-});
-
-document.getElementById('btnCart').addEventListener('click', ()=>{
-
-  alert('Bạn có ' + CART.length + ' sản phẩm trong giỏ.');
-
-});
-
-renderProducts();
-
-updateCartCount();
 
 </script>
 
