@@ -1,141 +1,533 @@
 <!doctype html>
+
 <html lang="vi">
+
 <head>
+
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>hack dot kick cfvn</title>
-<link rel="stylesheet" href="styles.css">
+
+<title>T2K Store</title>
+
+<style>
+
+*{
+
+  margin:0;
+
+  padding:0;
+
+  box-sizing:border-box;
+
+  font-family:Arial, sans-serif;
+
+}
+
+body{
+
+  background:#0f1115;
+
+  color:white;
+
+}
+
+.header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  padding:15px 30px;
+
+  background:#161a22;
+
+  border-bottom:1px solid #2b2f3a;
+
+  position:sticky;
+
+  top:0;
+
+}
+
+.brand{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+.logo{
+
+  width:42px;
+
+  height:42px;
+
+  background:#2e7dff;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-weight:bold;
+
+}
+
+.site-title{
+
+  font-size:20px;
+
+  font-weight:bold;
+
+}
+
+.nav{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+.btn{
+
+  padding:10px 14px;
+
+  border:none;
+
+  border-radius:10px;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+}
+
+.btn:hover{
+
+  transform:scale(1.05);
+
+}
+
+.primary{
+
+  background:#2e7dff;
+
+  color:white;
+
+}
+
+.ghost{
+
+  background:transparent;
+
+  border:1px solid #555;
+
+  color:white;
+
+}
+
+.container{
+
+  max-width:1200px;
+
+  margin:auto;
+
+  padding:20px;
+
+}
+
+.card{
+
+  background:#171b24;
+
+  border:1px solid #262c38;
+
+  border-radius:18px;
+
+  padding:20px;
+
+  margin-bottom:20px;
+
+}
+
+.grid{
+
+  display:grid;
+
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+  gap:20px;
+
+}
+
+.product{
+
+  transition:.2s;
+
+}
+
+.product:hover{
+
+  transform:translateY(-5px);
+
+  border-color:#2e7dff;
+
+}
+
+.thumb{
+
+  height:140px;
+
+  border-radius:14px;
+
+  background:linear-gradient(135deg,#2e7dff,#6a5cff);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:50px;
+
+  margin-bottom:15px;
+
+}
+
+.price{
+
+  color:#00ff9d;
+
+  font-weight:bold;
+
+  font-size:18px;
+
+}
+
+.small{
+
+  color:#aaa;
+
+  font-size:14px;
+
+}
+
+.row{
+
+  display:flex;
+
+  align-items:center;
+
+}
+
+.footer{
+
+  text-align:center;
+
+  padding:25px;
+
+  color:#888;
+
+}
+
+.fab{
+
+  position:fixed;
+
+  bottom:20px;
+
+  right:20px;
+
+}
+
+.count{
+
+  background:red;
+
+  border-radius:50%;
+
+  padding:2px 7px;
+
+  margin-left:5px;
+
+}
+
+.hidden{
+
+  display:none;
+
+}
+
+</style>
+
 </head>
+
 <body>
+
 <header class="header">
+
   <div class="brand">
-    <div class="logo">
-      <img src="assets/logo.svg" alt="T2K" style="width:36px;height:36px;border-radius:50%">
-    </div>
-    <div class="site-title">Hack dỏ kick an toàn tuyệt đối </div>
+
+    <div class="logo">T2K</div>
+
+    <div class="site-title">T2K Digital Store</div>
+
   </div>
+
   <div class="nav">
-    <div id="statusArea" class="small">Đang tải...</div>
-    <div id="balanceArea" class="small hidden">Số dư: <span id="balance">0</span>₫</div>
-    <button id="btnDeposit" class="btn hidden">Nạp tiền</button>
-    <button id="btnLogin" class="btn">Đăng nhập</button>
-    <button id="btnLogout" class="btn ghost hidden">Đăng xuất</button>
-    <button id="themeToggle" class="btn hide-mobile">Đổi giao diện</button>
+
+    <div id="statusArea" class="small">Chưa đăng nhập</div>
+
+    <button id="btnLogin" class="btn primary">
+
+      Đăng nhập
+
+    </button>
+
+    <button id="themeToggle" class="btn ghost">
+
+      Đổi giao diện
+
+    </button>
+
   </div>
+
 </header>
 
 <main class="container">
+
   <section class="card">
-    <h2>Chúng tôi cung cấp</h2>
-    <p class="small">chuyên hack cfvn , an toàn và nhanh chóng. Chọn sản phẩm và đặt hàng chúng tôi sẽ liên hệ với bạn qua phương thức bạn để lại tránh gm mam rợ.</p>
+
+    <h2>Chào mừng đến với T2K</h2>
+
+    <br>
+
+    <p class="small">
+
+      Chuyên cung cấp sản phẩm kỹ thuật số, giao hàng nhanh và hỗ trợ 24/7.
+
+    </p>
+
   </section>
 
   <section class="card">
-    <h3>Sản phẩm nổi bật</h3>
+
+    <h2>Sản phẩm nổi bật</h2>
+
+    <br>
+
     <div id="products" class="grid"></div>
+
   </section>
+
 </main>
 
-<footer class="footer">©Tool leo rank an toàn</footer>
+<footer class="footer">
+
+  © 2026 T2K Store
+
+</footer>
 
 <div class="fab">
-  <button id="btnCart" class="btn primary">Giỏ hàng <span id="cartCount" class="count">0</span></button>
+
+  <button id="btnCart" class="btn primary">
+
+    Giỏ hàng
+
+    <span id="cartCount" class="count">0</span>
+
+  </button>
+
 </div>
 
-<script src="common.js"></script>
 <script>
-// ====== SẢN PHẨM MẪU ======
+
 const PRODUCTS = [
-  {id:'p1', title:'bản lite ', desc:'an toàn ,bắn kín ', price:1d/40 7d/240 1th/540},
-  {id:'p2', title:'bản wall ', desc:'chir wall an toàn tuyệt đối ', price:1d/40 7d/24" 1th/540},
-  {id:'p3', title:' bản full ', desc:'gồm wall aim auto buny dành cho strem an toàn tuyệt đối', price:700k/7d 2000/1th}
+
+{
+
+  id:'p1',
+
+  title:'Gói Lite',
+
+  desc:'Phiên bản cơ bản dành cho người mới.',
+
+  price:40000
+
+},
+
+{
+
+  id:'p2',
+
+  title:'Gói Premium',
+
+  desc:'Nhiều tính năng nâng cao hơn.',
+
+  price:240000
+
+},
+
+{
+
+  id:'p3',
+
+  title:'Gói Ultimate',
+
+  desc:'Full tính năng + hỗ trợ VIP.',
+
+  price:540000
+
+}
+
 ];
 
-function renderProducts(){
-  const wrap = document.getElementById('products'); wrap.innerHTML='';
-  PRODUCTS.forEach(p=>{
-    const el = document.createElement('div'); el.className='product card';
-    el.innerHTML = `<div class="thumb">🎮</div>
-    <h4>${p.title}</h4>
-    <p class="small">${p.desc}</p>
-    <div class="row" style="justify-content:space-between">
-      <div class="price">${fmt(p.price)}</div>
-      <button class="btn primary" data-id="${p.id}">Thêm</button>
-    </div>`;
-    wrap.appendChild(el);
-  });
+function fmt(price){
+
+  return price.toLocaleString('vi-VN') + '₫';
+
 }
 
-// ====== GIỎ HÀNG ======
-let CART = JSON.parse(localStorage.getItem('cart')||'[]');
-function saveCart(){ localStorage.setItem('cart', JSON.stringify(CART)); updateCartCount(); }
-function updateCartCount(){ document.getElementById('cartCount').textContent = CART.reduce((s,i)=>s+i.qty,0); }
+function renderProducts(){
+
+  const wrap = document.getElementById('products');
+
+  wrap.innerHTML='';
+
+  PRODUCTS.forEach(p=>{
+
+    const el = document.createElement('div');
+
+    el.className='product card';
+
+    el.innerHTML = `
+
+      <div class="thumb">🎮</div>
+
+      <h3>${p.title}</h3>
+
+      <br>
+
+      <p class="small">${p.desc}</p>
+
+      <br>
+
+      <div class="row" style="justify-content:space-between">
+
+        <div class="price">${fmt(p.price)}</div>
+
+        <button class="btn primary addBtn" data-id="${p.id}">
+
+          Thêm
+
+        </button>
+
+      </div>
+
+    `;
+
+    wrap.appendChild(el);
+
+  });
+
+}
+
+let CART = JSON.parse(localStorage.getItem('cart') || '[]');
+
+function saveCart(){
+
+  localStorage.setItem('cart', JSON.stringify(CART));
+
+  updateCartCount();
+
+}
+
+function updateCartCount(){
+
+  const total = CART.reduce((s,i)=>s+i.qty,0);
+
+  document.getElementById('cartCount').textContent = total;
+
+}
 
 document.addEventListener('click', (e)=>{
-  const btn = e.target.closest('[data-id]');
+
+  const btn = e.target.closest('.addBtn');
+
   if(btn){
+
     const id = btn.dataset.id;
+
     const p = PRODUCTS.find(x=>x.id===id);
-    const f = CART.find(x=>x.id===id);
-    if(f) f.qty++; else CART.push({...p, qty:1});
+
+    const found = CART.find(x=>x.id===id);
+
+    if(found){
+
+      found.qty++;
+
+    }else{
+
+      CART.push({
+
+        ...p,
+
+        qty:1
+
+      });
+
+    }
+
     saveCart();
-    alert('Đã thêm vào giỏ');
+
+    alert('Đã thêm vào giỏ hàng');
+
   }
+
 });
 
-// ====== NGƯỜI DÙNG & SỐ DƯ ======
-function updateUI(){
-  const user = getCurrentUser();
-  const loginBtn = document.getElementById('btnLogin');
-  const logoutBtn = document.getElementById('btnLogout');
-  const depositBtn = document.getElementById('btnDeposit');
-  const balanceArea = document.getElementById('balanceArea');
-  const statusArea = document.getElementById('statusArea');
+document.getElementById('themeToggle').addEventListener('click', ()=>{
 
-  if(user){
-    loginBtn.classList.add('hidden');
-    logoutBtn.classList.remove('hidden');
-    depositBtn.classList.remove('hidden');
-    balanceArea.classList.remove('hidden');
-    statusArea.textContent = `Xin chào, ${user.display || user.username}`;
+  if(document.body.style.background === 'white'){
 
-    const u = findUser(user.username);
-    const balance = u?.balance || 0;
-    document.getElementById('balance').textContent = fmt(balance);
-  } else {
-    loginBtn.classList.remove('hidden');
-    logoutBtn.classList.add('hidden');
-    depositBtn.classList.add('hidden');
-    balanceArea.classList.add('hidden');
-    statusArea.textContent = 'Chưa đăng nhập';
+    document.body.style.background = '#0f1115';
+
+    document.body.style.color = 'white';
+
+  }else{
+
+    document.body.style.background = 'white';
+
+    document.body.style.color = 'black';
+
   }
-}
 
-// ====== NẠP TIỀN ======
-document.getElementById('btnDeposit').addEventListener('click', ()=>{
-  const user = getCurrentUser();
-  if(!user){ alert('Vui lòng đăng nhập trước.'); return; }
-
-  const amount = parseInt(prompt('Nhập số tiền muốn nạp (VNĐ):'));
-  if(isNaN(amount) || amount <= 0){ alert('Số tiền không hợp lệ.'); return; }
-
-  const u = findUser(user.username);
-  u.balance = (u.balance || 0) + amount;
-  saveUser(u);
-  alert(`Nạp thành công ${fmt(amount)}₫!`);
-  updateUI();
 });
 
-// ====== SỰ KIỆN KHÁC ======
-document.getElementById('btnCart').addEventListener('click', ()=>{ window.location.href='order.html'; });
-document.getElementById('btnLogin').addEventListener('click', ()=>{ window.location.href='login.html'; });
-document.getElementById('btnLogout').addEventListener('click', ()=>{ logout(); updateUI(); });
-document.getElementById('themeToggle').addEventListener('click', ()=>{ toggleTheme(); });
+document.getElementById('btnCart').addEventListener('click', ()=>{
+
+  alert('Bạn có ' + CART.length + ' sản phẩm trong giỏ.');
+
+});
 
 renderProducts();
+
 updateCartCount();
-updateUI();
+
 </script>
+
 </body>
+
 </html>
-  
